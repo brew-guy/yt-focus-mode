@@ -1,0 +1,32 @@
+/* Hide everything distracting */
+body.uw-focus-mode #masthead-container, 
+body.uw-focus-mode #secondary, 
+body.uw-focus-mode #comments,
+body.uw-focus-mode #sidebar,
+body.uw-focus-mode .ytp-endscreen-content {
+    display: none !important;
+}
+
+/* Force the video player to fill the viewport */
+body.uw-focus-mode #primary {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+}
+
+body.uw-focus-mode ytd-watch-flexy {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Ensure the player container is 100% of the viewport height */
+body.uw-focus-mode #player-container-outer {
+    max-width: 100% !important;
+    min-height: 100vh !important;
+}
+
+/* Remove scrolling to keep the eye locked on the video */
+body.uw-focus-mode.uw-no-scroll {
+    overflow: hidden !important;
+}

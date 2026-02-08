@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Icon Generator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      .icon-container {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      canvas {
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 8px 16px;
+        cursor: pointer;
+        background: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+      button:hover {
+        background: #1557b0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Generate PNG Icons</h1>
+    <p>
+      Chrome requires PNG icons for the extension manifest. Click the buttons
+      below to download the PNG versions.
+    </p>
+
+    <!-- Source SVG (Hidden) -->
+    <div style="display: none">
+      <svg
+        id="source-svg"
+        width="128"
+        height="128"
+        viewBox="0 0 128 128"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="128" height="128" rx="20" fill="#1a73e8" />
+        <path d="M42 36L86 64L42 92V36Z" fill="white" />
+        <rect
+          x="26"
+          y="26"
+          width="76"
+          height="76"
+          rx="6"
+          stroke="white"
+          stroke-width="6"
+          fill="none"
+        />
+      </svg>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+      const sizes = [16, 48, 128];
+      const svg = document.getElementById("source-svg");
+      const serializer = new XMLSerializer();
+      const svgData = serializer.serializeToString(svg);
+      const svgBlob = new Blob([svgData], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const url = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.onload = function () {
+        const container = document.getElementById("output");
+
+        sizes.forEach((size) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "icon-container";
+
+          // Label
+          const label = document.createElement("span");
+          label.textContent = `icon${size}.png (${size}x${size})`;
+          wrapper.appendChild(label);
+
+          // Canvas
+          const canvas = document.createElement("canvas");
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, size, size);
+          wrapper.appendChild(canvas);
+
+          // Download Button
+          const btn = document.createElement("button");
+          btn.textContent = "Download";
+          btn.onclick = () => {
+            const link = document.createElement("a");
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+          };
+          wrapper.appendChild(btn);
+
+          container.appendChild(wrapper);
+        });
+
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    </script>
+  </body>
+</html>
