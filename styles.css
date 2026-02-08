@@ -1,18 +1,24 @@
 /* Hide everything distracting */
-body.uw-focus-mode #masthead-container, 
-body.uw-focus-mode #secondary, 
+body.uw-focus-mode #masthead-container,
+body.uw-focus-mode #secondary,
 body.uw-focus-mode #comments,
 body.uw-focus-mode #sidebar,
-body.uw-focus-mode .ytp-endscreen-content {
+body.uw-focus-mode .ytp-endscreen-content,
+body.uw-focus-mode #below {
     display: none !important;
 }
 
+/* Force the video player to fill the viewport */
 /* Force the video player to fill the viewport */
 body.uw-focus-mode #primary {
     padding: 0 !important;
     margin: 0 !important;
     width: 100vw !important;
     max-width: 100vw !important;
+    height: 100vh !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 body.uw-focus-mode ytd-watch-flexy {
@@ -20,10 +26,19 @@ body.uw-focus-mode ytd-watch-flexy {
     margin: 0 !important;
 }
 
-/* Ensure the player container is 100% of the viewport height */
+/* Ensure the player container fits within the viewport with 16:9 aspect ratio */
 body.uw-focus-mode #player-container-outer {
+    /* Calculate exact size to fit 16:9 in viewport without clipping */
+    /* width = min(available_width, available_height * aspect_ratio) */
+    width: min(100vw, 177.77vh) !important;
+    /* height = min(available_height, available_width / aspect_ratio) */
+    height: min(100vh, 56.25vw) !important;
+
     max-width: 100% !important;
-    min-height: 100vh !important;
+    max-height: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
 }
 
 /* Remove scrolling to keep the eye locked on the video */
