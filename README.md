@@ -92,6 +92,27 @@ yt-focus-mode/
 3. Click the reload icon on the extension card
 4. Refresh any open YouTube tabs to load the updated code
 
+### Icon Generation
+
+Chrome extensions require PNG icons in multiple sizes (16px, 48px, 128px) for the manifest. The **[convert_icons.html](convert_icons.html)** utility simplifies this process:
+
+1. Open `convert_icons.html` in your browser
+2. The page displays preview canvases for each required icon size
+3. Click the **Download** button next to each size to save the PNG file
+4. Place the downloaded files in the `icons/` directory
+
+**How it works:**
+
+- Contains an embedded SVG icon definition (blue rounded rectangle with play button and frame)
+- Converts the SVG to PNG at each required size using HTML5 Canvas
+- Generates properly sized icons that match Chrome's extension requirements
+
+**To customize the icon:**
+
+1. Edit the SVG code in [convert_icons.html](convert_icons.html) (lines 41-61)
+2. Refresh the page to see your changes
+3. Download the updated PNG files
+
 ### Testing
 
 1. Load the extension in Chrome (see Installation)
